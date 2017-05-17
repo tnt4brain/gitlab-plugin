@@ -32,8 +32,9 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
 
     @Override
     public void handle(Job<?, ?> job, NoteHook hook, boolean ciSkip, BranchFilter branchFilter, MergeRequestLabelFilter mergeRequestLabelFilter) {
+
         if (isValidTriggerPhrase(hook.getObjectAttributes().getNote())
-            && mergeRequestLabelFilter.isMergeRequestAllowed(hook.getMergeRequest().getLabels())) {
+            && ( hook.getMergeRequest() == null ? true : mergeRequestLabelFilter.isMergeRequestAllowed(hook.getMergeRequest().getLabels()))) {
             super.handle(job, hook, ciSkip, branchFilter, mergeRequestLabelFilter);
         }
     }
