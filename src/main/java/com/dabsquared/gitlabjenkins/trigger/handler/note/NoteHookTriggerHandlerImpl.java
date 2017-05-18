@@ -77,7 +77,7 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
                 .withUserEmail(hook.getCommit().getAuthor().getEmail())
                 .withSourceRepoHomepage(hook.getRepository().getHomepage())
                 .withSourceRepoName(hook.getProject().getName())
-                .withSourceNamespace(hook.getProject().getNamespace)
+                .withSourceNamespace(hook.getProject().getNamespace())
                 .withSourceRepoUrl(hook.getProject().getUrl())
                 .withSourceRepoSshUrl(hook.getProject().getSshUrl())
                 .withSourceRepoHttpUrl(hook.getProject().getHttpUrl())
