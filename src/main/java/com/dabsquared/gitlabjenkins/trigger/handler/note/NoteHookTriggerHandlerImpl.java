@@ -66,6 +66,37 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
 
     @Override
     protected CauseData retrieveCauseData(NoteHook hook) {
+        if hook.getMergeRequest() == null {
+        return causeData()
+                .withActionType(CauseData.ActionType.NOTE)
+                .withSourceProjectId( 0 )
+                .withTargetProjectId( 0 )
+                .withBranch("")
+                .withSourceBranch("")
+                .withUserName(hook.getCommit().getAuthor().getName())
+                .withUserEmail(hook.getCommit().getAuthor().getEmail())
+                .withSourceRepoHomepage(hook.getRepository().getHomepage())
+                .withSourceRepoName(hook.getProject().getName())
+                .withSourceNamespace(hook.getProject().getNamespace)
+                .withSourceRepoUrl(hook.getProject().getUrl())
+                .withSourceRepoSshUrl(hook.getProject().getSshUrl())
+                .withSourceRepoHttpUrl(hook.getProject().getHttpUrl())
+                .withMergeRequestTitle("")
+                .withMergeRequestDescription("")
+                .withMergeRequestId("")
+                .withMergeRequestIid("")
+                .withMergeRequestTargetProjectId("")
+                .withTargetBranch("")
+                .withTargetRepoName("")
+                .withTargetNamespace("")
+                .withTargetRepoSshUrl("")
+                .withTargetRepoHttpUrl("")
+                .withTriggeredByUser(hook.getUser().getName())
+                .withLastCommit(hook.getCommit().getId())
+                .withTargetProjectUrl("")
+                .withTriggerPhrase(hook.getObjectAttributes().getNote())
+                .build();
+        } else {
         return causeData()
                 .withActionType(CauseData.ActionType.NOTE)
                 .withSourceProjectId(hook.getMergeRequest().getSourceProjectId())
@@ -95,6 +126,7 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
                 .withTargetProjectUrl(hook.getMergeRequest().getTarget().getWebUrl())
                 .withTriggerPhrase(hook.getObjectAttributes().getNote())
                 .build();
+    }
     }
 
     @Override
