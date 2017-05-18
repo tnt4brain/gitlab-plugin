@@ -70,7 +70,7 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
         return causeData()
                 .withActionType(CauseData.ActionType.NOTE)
                 .withSourceProjectId( 0 )
-                .withTargetProjectId( 0 )
+                .withTargetProjectId(hook.getObjectAttributes().getProjectId())
                 .withBranch("")
                 .withSourceBranch("")
                 .withUserName(hook.getCommit().getAuthor().getName())
