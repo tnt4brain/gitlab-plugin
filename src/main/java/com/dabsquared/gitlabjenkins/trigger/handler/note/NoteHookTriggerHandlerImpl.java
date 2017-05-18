@@ -66,7 +66,7 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
 
     @Override
     protected CauseData retrieveCauseData(NoteHook hook) {
-        if hook.getMergeRequest() == null {
+        if (hook.getMergeRequest() == null) {
         return causeData()
                 .withActionType(CauseData.ActionType.NOTE)
                 .withSourceProjectId( 0 )
