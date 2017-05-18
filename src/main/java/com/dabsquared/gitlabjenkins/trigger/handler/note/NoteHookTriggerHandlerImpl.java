@@ -152,7 +152,7 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
         } 
         if (hook.getCommit() != null
                 && hook.getCommit().getId() != null) {
-            return hook.getMergeRequest().getLastCommit().getId();
+            return hook.getCommit().getId();
         }
         else {
             throw new NoRevisionToBuildException();
