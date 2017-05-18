@@ -16,9 +16,18 @@ public class NoteHook extends WebHook {
     private Project project;
     private MergeRequestObjectAttributes mergeRequest;
     private NoteObjectAttributes objectAttributes;
+    private Commit commit;
+
+    public Commit getCommit() {
+        return commit;
+    }
 
     public User getUser() {
         return user;
+    }
+
+    public void setCommit(Commit commit) {
+        this.commit = commit;
     }
 
     public void setUser(User user) {
@@ -63,6 +72,7 @@ public class NoteHook extends WebHook {
                 .append(project, that.project)
                 .append(objectAttributes, that.objectAttributes)
                 .append(mergeRequest, that.mergeRequest)
+                .append(commit, that.commit)
                 .isEquals();
     }
 
@@ -73,6 +83,7 @@ public class NoteHook extends WebHook {
                 .append(project)
                 .append(objectAttributes)
                 .append(mergeRequest)
+                .append(commit)
                 .toHashCode();
     }
 
@@ -83,6 +94,7 @@ public class NoteHook extends WebHook {
                 .append("project", project)
                 .append("objectAttributes", objectAttributes)
                 .append("mergeRequest", mergeRequest)
+                .append("commit", commit)
                 .toString();
     }
 }
