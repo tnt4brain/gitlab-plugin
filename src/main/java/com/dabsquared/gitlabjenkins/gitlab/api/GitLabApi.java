@@ -3,6 +3,7 @@ package com.dabsquared.gitlabjenkins.gitlab.api;
 import com.dabsquared.gitlabjenkins.gitlab.api.model.Branch;
 import com.dabsquared.gitlabjenkins.gitlab.api.model.BuildState;
 import com.dabsquared.gitlabjenkins.gitlab.api.model.Label;
+import com.dabsquared.gitlabjenkins.gitlab.api.model.Commit;
 import com.dabsquared.gitlabjenkins.gitlab.api.model.MergeRequest;
 import com.dabsquared.gitlabjenkins.gitlab.api.model.Project;
 import com.dabsquared.gitlabjenkins.gitlab.api.model.User;
@@ -118,6 +119,16 @@ public interface GitLabApi {
                                 @PathParam("mergeRequestId") Integer mergeRequestId,
                                 @FormParam("body") String body);
 
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/projects/{projectId}/merge_requests/{mergeRequestId}/notes")
+    void createMergeRequestNote(@PathParam("projectId") Integer projectId,
+                                @PathParam("mergeRequestId") Integer mergeRequestId,
+                                @FormParam("body") String body);
+
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/projects/{projectId}/merge_requests")
@@ -170,4 +181,26 @@ public interface GitLabApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/projects/{projectId}/labels")
     List<Label> getLabels(@PathParam("projectId") String projectId);
+/*
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{projectNamespace}/{projectName}/notes")
+    List<Note> getNotes(@PathParam("projectNamespace") String projectNamespace,
+                        @PathParam("projectName") String projectName,
+                        @QueryParam("target_type") "commit",
+                        @QueryParam("target_id") String sha);
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{projectNamespace}/{projectName}/notes")
+    List<Note> getNotes(@PathParam("projectNamespace") String projectNamespace,
+                        @PathParam("projectName") String projectName,
+                        @FormParam("target_type") "commit",
+                        @FormParam("target_id") String sha,
+                        @FormParam("note[commit_id]") String sha,
+                        @FormParam("note[noteable_id]") String "",
+                        @FormParam("note[noteable_type]") String "Commit",
+                        @FormParam("note[note]") String 
+*/
+
 }

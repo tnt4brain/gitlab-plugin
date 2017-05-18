@@ -69,8 +69,8 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
         if (hook.getMergeRequest() == null) {
         return causeData()
                 .withActionType(CauseData.ActionType.NOTE)
-                .withSourceProjectId( 0 )
-                .withTargetProjectId(hook.getObjectAttributes().getProjectId())
+                .withSourceProjectId(hook.getObjectAttributes().getProjectId())
+                .withTargetProjectId(0)
                 .withBranch("")
                 .withSourceBranch("")
                 .withUserName(hook.getCommit().getAuthor().getName())
@@ -136,11 +136,21 @@ class NoteHookTriggerHandlerImpl extends AbstractWebHookTriggerHandler<NoteHook>
 
     @Override
     protected BuildStatusUpdate retrieveBuildStatusUpdate(NoteHook hook) {
+        if (hook.getMergeRequest() != null
+                && hook.getMergeRequest().getSourceProjectId() != null) {
         return buildStatusUpdate()
             .withProjectId(hook.getMergeRequest().getSourceProjectId())
             .withSha(hook.getMergeRequest().getLastCommit().getId())
             .withRef(hook.getMergeRequest().getSourceBranch())
             .build();
+            }
+        else {
+        return buildStatusUpdate()
+            .withProjectId(hook.getObjectAttributes().getProjectId())
+            .withSha(hook.getCommit().getId())
+            .withRef("")
+            .build();
+            }
     }
 
     private String retrieveRevisionToBuild(NoteHook hook) throws NoRevisionToBuildException {

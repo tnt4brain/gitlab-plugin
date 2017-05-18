@@ -70,8 +70,8 @@ public class AddGitLabMergeRequestCommentStep extends AbstractStepImpl {
                         try {
                             client.createMergeRequestNote(projectId, mergeRequestId, step.getComment());
                         } catch (WebApplicationException | ProcessingException e) {
-                            printf("Failed to add comment on Merge Request for project '%s': %s%n", projectId, e.getMessage());
-                            LOGGER.log(Level.SEVERE, String.format("Failed to add comment on Merge Request for project '%s'", projectId), e);
+                            printf("TM3: Failed to add comment on Merge Request for project '%s': %s%n", projectId, e.getMessage());
+                            LOGGER.log(Level.SEVERE, String.format("TM4: Failed to add comment on Merge Request for project '%s'", projectId), e);
                         }
                     }
                 }

@@ -113,8 +113,8 @@ public class GitLabMessagePublisher extends MergeRequestNotifier {
                 client.createMergeRequestNote(projectId, mergeRequestId, getNote(build, listener));
             }
         } catch (WebApplicationException | ProcessingException e) {
-            listener.getLogger().printf("Failed to add comment on Merge Request for project '%s': %s%n", projectId, e.getMessage());
-            LOGGER.log(Level.SEVERE, String.format("Failed to add comment on Merge Request for project '%s'", projectId), e);
+            listener.getLogger().printf("TM1: Failed to add comment on Merge Request for project '%s': %s%n", projectId, e.getMessage());
+            LOGGER.log(Level.SEVERE, String.format("TM2: Failed to add comment on Merge Request for project '%s'", projectId), e);
         }
     }
 
