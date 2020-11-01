@@ -17,6 +17,7 @@ import org.kohsuke.stapler.StaplerRequest;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -127,6 +128,48 @@ public class ActionResolverTest {
     }
 
     @Test
+    public void postSystemHookMergeRequest() throws IOException {
+        String projectName = "postSystemHookMergeRequest";
+        jenkins.createFreeStyleProject(projectName);
+        when(request.getRestOfPath()).thenReturn("");
+        when(request.getMethod()).thenReturn("POST");
+        when(request.getHeader("X-Gitlab-Event")).thenReturn("System Hook");
+        when(request.getInputStream()).thenReturn(new ResourceServletInputStream("ActionResolverTest_postSystemHook_MergeRequest.json"));
+
+        WebHookAction resolvedAction = new ActionResolver().resolve(projectName, request);
+
+        assertThat(resolvedAction, instanceOf(MergeRequestBuildAction.class));
+    }
+
+    @Test
+    public void postSystemHookPush() throws IOException {
+        String projectName = "postSystemHookPush";
+        jenkins.createFreeStyleProject(projectName);
+        when(request.getRestOfPath()).thenReturn("");
+        when(request.getMethod()).thenReturn("POST");
+        when(request.getHeader("X-Gitlab-Event")).thenReturn("System Hook");
+        when(request.getInputStream()).thenReturn(new ResourceServletInputStream("ActionResolverTest_postSystemHook_Push.json"));
+
+        WebHookAction resolvedAction = new ActionResolver().resolve(projectName, request);
+
+        assertThat(resolvedAction, instanceOf(PushBuildAction.class));
+    }
+
+    @Test
+    public void postSystemHookPushTag() throws IOException {
+        String projectName = "postSystemHookPushTag";
+        jenkins.createFreeStyleProject(projectName);
+        when(request.getRestOfPath()).thenReturn("");
+        when(request.getMethod()).thenReturn("POST");
+        when(request.getHeader("X-Gitlab-Event")).thenReturn("System Hook");
+        when(request.getInputStream()).thenReturn(new ResourceServletInputStream("ActionResolverTest_postSystemHook_PushTag.json"));
+
+        WebHookAction resolvedAction = new ActionResolver().resolve(projectName, request);
+
+        assertThat(resolvedAction, instanceOf(PushBuildAction.class));
+    }
+
+    @Test
     public void postNote() throws IOException {
         String projectName = "postNote";
         jenkins.createFreeStyleProject(projectName);
@@ -208,6 +251,20 @@ public class ActionResolverTest {
         @Override
         public int read() throws IOException {
             return input.read();
+        }
+
+        @Override
+        public boolean isReady(){
+            return true;
+        }
+
+        @Override
+        public boolean isFinished(){
+            return true;
+        }
+
+        @Override
+        public void setReadListener(ReadListener var1){
         }
     }
 }

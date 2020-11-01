@@ -51,7 +51,7 @@ public class PushHookTriggerHandlerImplTest {
 
     @Before
     public void setup() {
-        pushHookTriggerHandler = new PushHookTriggerHandlerImpl();
+        pushHookTriggerHandler = new PushHookTriggerHandlerImpl(false);
     }
 
     @Test
@@ -101,6 +101,7 @@ public class PushHookTriggerHandlerImplTest {
                 .withBefore("0000000000000000000000000000000000000000")
                 .withProjectId(1)
                 .withUserName("test")
+                .withObjectKind("tag_push")
                 .withRepository(repository()
                         .withName("test")
                         .withHomepage("https://gitlab.org/test")
@@ -151,6 +152,7 @@ public class PushHookTriggerHandlerImplTest {
             .withBefore("0000000000000000000000000000000000000000")
             .withProjectId(1)
             .withUserName("test")
+            .withObjectKind("push")
             .withRepository(repository()
                                 .withName("test")
                                 .withHomepage("https://gitlab.org/test")

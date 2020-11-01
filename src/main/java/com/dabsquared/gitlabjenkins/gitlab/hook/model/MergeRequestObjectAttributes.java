@@ -30,11 +30,11 @@ public class MergeRequestObjectAttributes {
     private Project source;
     private Project target;
     private Commit lastCommit;
+    private String oldrev;
     private String mergeStatus;
     private String url;
     private Action action;
     private Boolean workInProgress;
-    private List<String> labels;
 
     public Integer getId() {
         return id;
@@ -164,6 +164,10 @@ public class MergeRequestObjectAttributes {
         this.lastCommit = lastCommit;
     }
 
+    public String getOldrev() { return oldrev; }
+
+    public void setOldrev(String oldrev) { this.oldrev = oldrev; }
+
     public String getMergeStatus() {
         return mergeStatus;
     }
@@ -196,14 +200,6 @@ public class MergeRequestObjectAttributes {
         this.workInProgress = workInProgress;
     }
 
-    public List<String> getLabels() {
-        return labels;
-    }
-
-    public void setLabels(List<String> labels) {
-        this.labels = labels;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -233,8 +229,8 @@ public class MergeRequestObjectAttributes {
             .append(mergeStatus, that.mergeStatus)
             .append(url, that.url)
             .append(action, that.action)
+            .append(oldrev, that.oldrev)
             .append(workInProgress, that.workInProgress)
-            .append(labels, that.labels)
             .isEquals();
     }
 
@@ -261,7 +257,6 @@ public class MergeRequestObjectAttributes {
             .append(url)
             .append(action)
             .append(workInProgress)
-            .append(labels)
             .toHashCode();
     }
 
@@ -287,8 +282,8 @@ public class MergeRequestObjectAttributes {
             .append("mergeStatus", mergeStatus)
             .append("url", url)
             .append("action", action)
+            .append("oldrev", oldrev)
             .append("workInProgress", workInProgress)
-            .append("labels", labels)
             .toString();
     }
 }

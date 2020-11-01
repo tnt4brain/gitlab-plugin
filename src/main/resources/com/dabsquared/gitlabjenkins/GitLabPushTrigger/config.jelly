@@ -6,8 +6,15 @@
       <f:entry title="Push Events" field="triggerOnPush">
         <f:checkbox default="true"/>
       </f:entry>
+      <f:entry title="Push Events in case of branch delete" field="triggerToBranchDeleteRequest">
+        <f:checkbox default="false"/>
+      </f:entry>
       <f:entry title="Opened Merge Request Events" field="triggerOnMergeRequest">
         <f:checkbox default="true"/>
+      </f:entry>
+      <f:entry title="Build only if new commits were pushed to Merge Request" field="triggerOnlyIfNewCommitsPushed"
+      help="/plugin/gitlab-plugin/help/help-triggerOnlyIfNewCommitsPushed.html">
+        <f:checkbox default="false"/>
       </f:entry>
       <f:entry title="Accepted Merge Request Events" field="triggerOnAcceptedMergeRequest">
         <f:checkbox default="false"/>
@@ -18,10 +25,13 @@
       <f:entry title="Rebuild open Merge Requests" field="triggerOpenMergeRequestOnPush">
         <f:select/>
       </f:entry>
+      <f:entry title="Approved Merge Requests (EE-only)" field="triggerOnApprovedMergeRequest">
+        <f:checkbox default="true"/>
+      </f:entry>
       <f:entry title="Comments" field="triggerOnNoteRequest">
         <f:checkbox default="true"/>
       </f:entry>
-      <f:entry title="Comment for triggering a build" help="/plugin/gitlab-plugin/help/help-noteRegex.html">
+      <f:entry title="Comment (regex) for triggering a build" help="/plugin/gitlab-plugin/help/help-noteRegex.html">
         <f:textbox field="noteRegex" default="Jenkins please retry a build"/>
       </f:entry>
     </table>
@@ -33,8 +43,20 @@
     <f:entry title="${%Ignore WIP Merge Requests}" field="skipWorkInProgressMergeRequest">
       <f:checkbox default="true"/>
     </f:entry>
+    <f:entry title="Labels that forces builds if they are added (comma-separated)">
+      <f:textbox field="labelsThatForcesBuildIfAdded"/>
+    </f:entry>
     <f:entry title="Set build description to build cause (eg. Merge request or Git Push )" field="setBuildDescription">
       <f:checkbox default="true"/>
+    </f:entry>
+    <f:entry title="Build on successful pipeline events" field="triggerOnPipelineEvent">
+      <f:checkbox default="false"/>
+    </f:entry>
+    <f:entry title="Pending build name for pipeline" help="/plugin/gitlab-plugin/help/help-pendingBuildName.html">
+      <f:textbox field="pendingBuildName"/>
+    </f:entry>
+    <f:entry title="Cancel pending merge request builds on update" field="cancelPendingBuildsOnUpdate">
+      <f:checkbox default="false"/>
     </f:entry>
 
     <f:entry title="Allowed branches">
@@ -57,6 +79,9 @@
         <f:radioBlock name="branchFilterType" value="RegexBasedFilter" title="Filter branches by regex"
                       checked="${instance.branchFilterType == 'RegexBasedFilter'}" inline="true"
                       help="/plugin/gitlab-plugin/help/help-filterBranchesByRegex.html">
+          <f:entry title="Source Branch Regex">
+            <f:textbox name="sourceBranchRegex" field="sourceBranchRegex"/>
+          </f:entry>
           <f:entry title="Target Branch Regex">
             <f:textbox name="targetBranchRegex" field="targetBranchRegex"/>
           </f:entry>

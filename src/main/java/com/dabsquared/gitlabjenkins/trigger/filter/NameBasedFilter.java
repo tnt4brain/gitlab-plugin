@@ -4,6 +4,7 @@ import com.google.common.base.Splitter;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,8 +21,8 @@ class NameBasedFilter implements BranchFilter {
     }
 
     @Override
-    public boolean isBranchAllowed(String branchName) {
-        return hasNoBranchSpecs() || (isBranchNotExcluded(branchName) && isBranchIncluded(branchName));
+    public boolean isBranchAllowed(String sourceBranchName, String targetBranchName) {
+        return hasNoBranchSpecs() || (isBranchNotExcluded(targetBranchName) && isBranchIncluded(targetBranchName));
     }
 
     private boolean hasNoBranchSpecs() {
@@ -49,6 +50,9 @@ class NameBasedFilter implements BranchFilter {
     }
 
     private List<String> convert(String commaSeparatedString) {
+        if (commaSeparatedString == null)
+            return Collections.EMPTY_LIST;
+
         ArrayList<String> result = new ArrayList<>();
         for (String s : Splitter.on(',').omitEmptyStrings().trimResults().split(commaSeparatedString)) {
             result.add(s);
